@@ -1,0 +1,41 @@
+﻿@model FuzzyController.Models.APIrequest
+
+@{
+    ViewData["Title"] = "API Request";
+}
+
+<div class="container mt-5">
+    <h2>Fill out the feedback form</h2>
+    <form asp-action="Submit" method="post">
+        <div class="form-group">
+            <label asp-for="Name"></label>
+            <input asp-for="Name" class="form-control" placeholder="Enter the name of restaurant" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="FoodQuality"></label>
+            <input asp-for="FoodQuality" class="form-control" placeholder="Enter Food Quality Score" />
+            <span asp-validation-for="FoodQuality" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="ServiceLevel"></label>
+            <input asp-for="ServiceLevel" class="form-control" placeholder="Enter Service Level Score" />
+            <span asp-validation-for="ServiceLevel" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Atmosphere"></label>
+            <input asp-for="Atmosphere" class="form-control" placeholder="Enter Atmosphere Score" />
+            <span asp-validation-for="Atmosphere" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Comentary"></label>
+            <textarea asp-for="Comentary" class="form-control" rows="4" placeholder="Enter Comentary"></textarea>
+            <span asp-validation-for="Comentary" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

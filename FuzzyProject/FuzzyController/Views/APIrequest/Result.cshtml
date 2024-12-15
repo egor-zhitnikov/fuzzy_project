@@ -1,0 +1,10 @@
+﻿@{
+    var score = TempData["Score"]?.ToString();
+}
+
+<h1>Результат обчислення</h1>
+<p>Оцінка: @score</p>
+
+<a href="@Url.Action("Submit", "APIrequest")">На головну</a>
+
+

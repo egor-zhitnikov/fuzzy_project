@@ -1,0 +1,50 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        <a asp-controller="Account" asp-action="Logout" class="btn btn-danger">Logout</a>
+    }
+    else
+    {
+        <a asp-controller="Account" asp-action="Login" class="btn btn-primary">Login</a>
+    }
+
+    <!-- Новая кнопка -->
+    <div class="mt-4">
+        <a asp-controller="Restaurant" asp-action="Find" class="btn btn-success">Find Restaurant</a>
+    </div>
+</div>
+
+@if (User.Identity.IsAuthenticated)
+{
+    <!-- Лента с отзывами справа -->
+    <div class="row mt-4">
+        <div class="col-md-8">
+            <!-- Основной контент страницы -->
+            <p>Here is the main content.</p>
+        </div>
+        <div class="col-md-4">
+            <h3>Latest Reviews</h3>
+            <ul class="list-group">
+                @if (ViewData["Reviews"] is List<dynamic> reviews && reviews.Count > 0)
+                {
+                    @foreach (var review in reviews)
+                    {
+                        <li class="list-group-item">
+                            @review.Comentary — @review.Name
+                        </li>
+                    }
+                }
+                else
+                {
+                    <li class="list-group-item">No reviews available.</li>
+                }
+            </ul>
+        </div>
+    </div>
+}

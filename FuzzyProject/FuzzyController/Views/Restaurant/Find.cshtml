@@ -1,0 +1,52 @@
+﻿@model List<string>
+
+<h1>Популярні ресторани</h1>
+
+<ul id="restaurantList">
+    @foreach (var restaurantName in Model)
+    {
+        <li>
+            <a href="javascript:void(0);" class="restaurant-link" data-name="@restaurantName">
+                @restaurantName
+            </a>
+        </li>
+    }
+</ul>
+
+<h2>Інформація про ресторан</h2>
+<div id="restaurantInfo" style="display: none;">
+    <p><strong>Ресторан:</strong> <span id="restaurantName"></span></p>
+    <p><strong>Оцінка:</strong> <span id="restaurantMark"></span></p>
+    <p><strong>Категорія:</strong> <span id="restaurantCategory"></span></p>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const links = document.querySelectorAll('.restaurant-link');
+            links.forEach(link => {
+                link.addEventListener('click', async (event) => {
+                    const restaurantName = event.target.getAttribute('data-name');
+                    
+                    // Показуємо ім'я ресторану в секції інформації
+                    document.getElementById('restaurantName').textContent = restaurantName;
+
+                    try {
+                        const response = await fetch(`/Restaurant/GetRestaurantRating?restaurantName=${encodeURIComponent(restaurantName)}`);
+                        const data = await response.json();
+
+                        if (data.success) {
+                            document.getElementById('restaurantMark').textContent = data.mark;
+                            document.getElementById('restaurantCategory').textContent = data.category;
+                            document.getElementById('restaurantInfo').style.display = 'block';
+                        } else {
+                            alert(data.message || 'Не вдалося отримати рейтинг ресторану.');
+                        }
+                    } catch (error) {
+                        alert('Помилка під час отримання інформації про ресторан.');
+                    }
+                });
+            });
+        });
+    </script>
+}
